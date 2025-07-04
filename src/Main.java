@@ -55,6 +55,19 @@ public class Main {
             System.out.println("failed: " + e.getMessage());
         }
 
+        System.out.println("\n------------------------------------\n");
+
+        Customer lowBalanceCustomer = new Customer("Ali", 10.0, inventoryService);
+        Cart lowBalanceCart = lowBalanceCustomer.getCart();
+
+        try {
+            System.out.println("--- checkout with insufficient funds ---");
+            lowBalanceCart.addProduct(new Electronics("TV", 2000, 1), 1); // TV costs 2000, Ali has 10
+            checkoutService.processCheckout(lowBalanceCustomer, lowBalanceCart);
+        } catch (IllegalStateException e) {
+            System.out.println("failed: " + e.getMessage());
+        }
+
     }
 
     private static void populateInventory(InventoryService inventoryService) {
