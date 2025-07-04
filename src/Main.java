@@ -13,13 +13,13 @@ public class Main {
         Cart cart = customer.getCart();
 
         try {
-            System.out.println("--- Ahmed's Shopping Spree ---");
+            System.out.println("--- Ahmed's Shopping ---");
             cart.addProduct(new FoodProducts("Cheese", 100, 1, 200, LocalDate.now().plusDays(10)), 2);
             cart.addProduct(new Electronics("TV", 2000, 1), 1);
             cart.addProduct(new MobileScratchCard("Mobile Scratch Card", 15, 1), 1);
             checkoutService.processCheckout(customer, cart);
         } catch (IllegalStateException e) {
-            System.out.println("Action failed: " + e.getMessage());
+            System.out.println("failed: " + e.getMessage());
         }
 
         System.out.println("\n------------------------------------\n");
@@ -28,17 +28,17 @@ public class Main {
         Cart ahmedsCart = ahmed.getCart();
 
         try {
-            System.out.println("--- Ahmed tries to buy too many TVs ---");
+            System.out.println("--- checkout with a out-of-stock item ---");
             ahmedsCart.addProduct(new Electronics("TV", 2000, 1), 10);
         } catch (IllegalStateException e) {
-            System.out.println("Action failed: " + e.getMessage());
+            System.out.println("failed: " + e.getMessage());
         }
 
         try {
             System.out.println("\n--- checkout with an empty cart ---");
             checkoutService.processCheckout(ahmed, ahmedsCart);
         } catch (IllegalStateException e) {
-            System.out.println("Action failed: " + e.getMessage());
+            System.out.println("failed: " + e.getMessage());
         }
 
         System.out.println("\n------------------------------------\n");
@@ -48,11 +48,11 @@ public class Main {
         inventoryService.addProduct(new FoodProducts("Expired Cheese", 50, 1, 100, LocalDate.now().minusDays(1)));
 
         try {
-            System.out.println("--- Youssef tries to buy an expired item ---");
+            System.out.println("--- checkout with an expired item ---");
             youssefsCart.addProduct(new FoodProducts("Expired Cheese", 50, 1, 100, LocalDate.now().minusDays(1)), 1);
             checkoutService.processCheckout(youssef, youssefsCart);
         } catch (IllegalStateException e) {
-            System.out.println("Action failed: " + e.getMessage());
+            System.out.println("failed: " + e.getMessage());
         }
 
     }
